@@ -1,15 +1,22 @@
-version: '2'
+version: '3.2'
 services:
   ui:
     image: tesutoproject/ui:0.1
     working_dir: /ui
-    entrypoint: ng serve --host 0.0.0.0
+    entrypoint: bash -c "npm install && ng serve --host 0.0.0.0"
     ports:
       - "4200:4200"
     volumes:
-      - ../ui:/ui
+      - type: bind
+        source: ../ui
+        target: /ui
+      - type: volume
+        source: node_modules
+        target: /ui/node_modules
     networks:
       - tesuto-network
 networks:
   tesuto-network:
     driver: bridge
+volumes:
+  node_modules:
