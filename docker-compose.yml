@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   ui:
-    image: tesutoproject/ui:0.1
+    image: tesutoproject/ui:0.2
     working_dir: /ui
     entrypoint: bash -c "npm install && ng serve --host 0.0.0.0"
     ports:
