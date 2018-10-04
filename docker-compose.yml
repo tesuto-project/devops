@@ -1,6 +1,7 @@
 version: '3.2'
 services:
   ui:
+    container_name: ui
     image: tesutoproject/ui:0.2
     working_dir: /ui
     entrypoint: bash -c "npm install && ng serve --host 0.0.0.0"
@@ -10,9 +11,19 @@ services:
       - type: bind
         source: ../ui
         target: /ui
-      - type: volume
-        source: node_modules
-        target: /ui/node_modules
+    networks:
+      - tesuto-network
+  api:
+    container_name: api
+    image: tesutoproject/api:0.2
+    working_dir: /api
+    entrypoint: bash -c "python manage.py runserver 0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: bind
+        source: ../api
+        target: /api
     networks:
       - tesuto-network
 networks:
